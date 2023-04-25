@@ -1,12 +1,10 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import Input from '../../components/Input';
+import FormTask from '../../components/FormTask';
 
 function NewTask() {
-  return (
-    <View>
-      <Text>New Task</Text>
-    </View>
-  );
+  return <FormTask />;
 }
 
 export default NewTask;

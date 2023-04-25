@@ -17,8 +17,12 @@ import InputSearch from '../../components/InputSearch';
 import CheckBox from '@react-native-community/checkbox';
 import Icon from 'react-native-vector-icons/Feather';
 import ModalConfirm from '../../components/ModalConfirm';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {AppStack} from '../../routes/AppRoutes';
 
-function Home() {
+type Props = NativeStackScreenProps<AppStack, 'Home'>;
+
+function Home({navigation}: Props) {
   const [check, setCheck] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -38,6 +42,10 @@ function Home() {
     setSearchTerm(value);
   }
 
+  function handleToNewTask() {
+    navigation.push('NewTask');
+  }
+
   return (
     <ScrollView>
       <Container>
@@ -50,7 +58,7 @@ function Home() {
         <HeaderContainer>
           <HeaderTitle>{existsTask}</HeaderTitle>
 
-          <AddTaskButton>
+          <AddTaskButton onPress={handleToNewTask}>
             <TextButton>Nova Tarefa +</TextButton>
           </AddTaskButton>
         </HeaderContainer>
