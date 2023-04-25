@@ -1,11 +1,12 @@
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import Tasks from './src/screens/Home';
+import Background from './src/components/Background';
 
 function App(): JSX.Element {
   return (
-    <SafeAreaView>
-      <Text>Olá</Text>
-    </SafeAreaView>
+    <Background>
+      <Tasks />
+    </Background>
   );
 }
 
