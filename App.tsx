@@ -1,12 +1,15 @@
 import React from 'react';
-import Tasks from './src/screens/Home';
 import Background from './src/components/Background';
+import AppRoutes from './src/routes/AppRoutes';
+import {NavigationContainer} from '@react-navigation/native';
 
 function App(): JSX.Element {
   return (
-    <Background>
-      <Tasks />
-    </Background>
+    <NavigationContainer>
+      <Background>
+        <AppRoutes />
+      </Background>
+    </NavigationContainer>
   );
 }
 

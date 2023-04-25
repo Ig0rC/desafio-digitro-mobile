@@ -20,7 +20,7 @@ function ModalConfirm({visible}: Props) {
       <ContainerContent>
         <Background>
           <Content>
-            <Title>Tem certeza que deseja remove a tarefa ?</Title>
+            <Title>Tem certeza que deseja remover a tarefa ?</Title>
 
             <Button type="confirm">
               <TextButton type="confirm">Excluir</TextButton>

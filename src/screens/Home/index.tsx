@@ -78,7 +78,7 @@ function Home() {
           )}
         </Card>
       </Container>
-      <ModalConfirm visible={true} />
+      <ModalConfirm visible={false} />
     </ScrollView>
   );
 }
