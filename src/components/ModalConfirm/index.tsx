@@ -12,20 +12,25 @@ import {
 
 interface Props {
   visible: boolean;
+  onCloseModal: () => void;
+  taskTitle?: string;
+  onConfirm: () => void;
 }
 
-function ModalConfirm({visible}: Props) {
+function ModalConfirm({visible, onCloseModal, taskTitle, onConfirm}: Props) {
   return (
     <Modal animationType="slide" transparent={true} visible={visible}>
       <ContainerContent>
         <Background>
           <Content>
-            <Title>Tem certeza que deseja remover a tarefa ?</Title>
+            <Title>
+              Tem certeza que deseja remover a tarefa "{taskTitle}" ?
+            </Title>
 
-            <Button type="confirm">
+            <Button onPress={onConfirm} type="confirm">
               <TextButton type="confirm">Excluir</TextButton>
             </Button>
-            <Button type="cancel">
+            <Button onPress={onCloseModal} type="cancel">
               <TextButton type="cancel">Cancelar</TextButton>
             </Button>
           </Content>

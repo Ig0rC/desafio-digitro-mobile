@@ -4,6 +4,10 @@ interface Props {
   checkBox: boolean;
 }
 
+interface StatusProps {
+  colorStatus: 'completed' | 'notCompleted';
+}
+
 interface CardProps extends Props {}
 interface TitleProps extends Props {}
 interface DescriptionProps extends Props {}
@@ -14,27 +18,42 @@ export const Container = styled.View`
 
 export const HeaderContainer = styled.View`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   margin: 8px 0px;
 `;
 
+export const Status = styled.Text<StatusProps>`
+  font-size: 16px;
+  font-weight: bold;
+  color: ${({colorStatus}) => (colorStatus === 'completed' ? 'green' : 'red')};
+`;
+
+export const StatusContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 export const HeaderTitle = styled.Text`
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   color: black;
 `;
 
-export const TextButton = styled.Text`
-  color: white;
-`;
-
-export const AddTaskButton = styled.TouchableOpacity`
-  background-color: #5061fc;
+export const AddTaskContainer = styled.View`
   padding: 8px;
-  border-radius: 4px;
   justify-content: center;
   align-items: center;
+
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+`;
+
+export const AddTaskText = styled.Text`
+  color: #5061fc;
+  font-weight: bold;
+  font-size: 16px;
 `;
 
 export const Card = styled.View<CardProps>`
@@ -44,7 +63,6 @@ export const Card = styled.View<CardProps>`
 
   flex-direction: row;
   align-items: center;
-  /* justify-content: space-between; */
 
   shadowcolor: #000;
   shadowoffset: 0 2px;
@@ -82,4 +100,8 @@ export const Description = styled.Text<DescriptionProps>`
   color: #4f4f4f;
 
   text-decoration: ${({checkBox}) => (checkBox ? 'line-through' : 'none')};
+`;
+
+export const SpaceBottom = styled.View`
+  margin-bottom: 78px;
 `;

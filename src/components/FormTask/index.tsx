@@ -4,7 +4,11 @@ import FormGroup from '../FormGroup';
 import {Button, Form, TextButton} from './styles';
 import useErrors from '../../hooks/useErrors';
 
-function FormTask() {
+interface Props {
+  onSubmit: (title: string, description: string) => void;
+}
+
+function FormTask({onSubmit}: Props) {
   const {getErrorMessageByFieldName, setError, removeError, errors} =
     useErrors();
 
@@ -25,6 +29,10 @@ function FormTask() {
 
   function handleDescriptionChange(value: string) {
     setDescription(value);
+  }
+
+  function handleSubmit() {
+    onSubmit(title, description);
   }
 
   return (
@@ -49,7 +57,7 @@ function FormTask() {
         />
       </FormGroup>
 
-      <Button disabled={!isFormValid} type="confirm">
+      <Button onPress={handleSubmit} disabled={!isFormValid} type="confirm">
         <TextButton type="confirm">Cadastrar</TextButton>
       </Button>
     </Form>

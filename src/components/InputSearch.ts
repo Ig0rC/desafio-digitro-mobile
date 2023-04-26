@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export default styled.TextInput`
   height: 40px;
-  border-radius: 4px;
+  border-radius: 100px;
   padding: 4px 8px;
   font-size: 16px;
   border: 1px solid #c3c3c3;
