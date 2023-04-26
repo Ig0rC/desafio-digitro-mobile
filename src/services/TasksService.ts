@@ -1,13 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {v4 as uuidv4} from 'uuid';
 import TaskRepository from './repositories/TaskRepository';
-
-interface Task {
-  id: string;
-  title: string;
-  description?: string;
-  status: boolean;
-}
+import {Task} from '../interfaces/Task';
 
 class TasksService {
   async findAll() {
@@ -44,8 +38,42 @@ class TasksService {
     return tasksFiltered;
   }
 
-  async update(task: Task[]) {
-    await TaskRepository.setTasks(task);
+  updateTasks(task: Task, tasks: Task[]) {
+    if (tasks.length > 0) {
+      const tasksUpdate = tasks.map(taskCurrent => {
+        if (taskCurrent.id === task.id) {
+          return {
+            ...task,
+          };
+        }
+
+        return taskCurrent;
+      });
+
+      TaskRepository.setTasks(tasksUpdate);
+
+      return tasksUpdate;
+    }
+
+    return tasks;
+  }
+
+  async updateOne(task: Task) {
+    const tasks = await TaskRepository.getTasks();
+
+    if (tasks.length > 0) {
+      const tasksUpdate = tasks.map(taskCurrent => {
+        if (taskCurrent.id === task.id) {
+          return {
+            ...task,
+          };
+        }
+
+        return taskCurrent;
+      });
+
+      await TaskRepository.setTasks(tasksUpdate);
+    }
   }
 
   async findOne(id: string) {
@@ -56,7 +84,7 @@ class TasksService {
 
       const findTask = tasksParse.find(task => task.id === id);
 
-      return findTask;
+      return findTask as Task;
     }
 
     return null;

@@ -26,15 +26,10 @@ import {AppStack} from '../../routes/AppRoutes';
 import TasksService from '../../services/TasksService';
 import {useIsFocused} from '@react-navigation/native';
 import ContainerMain from '../../components/ContainerMain';
+import {Task} from '../../interfaces/Task';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
 
 type Props = NativeStackScreenProps<AppStack, 'Home'>;
-
-interface Task {
-  id: string;
-  title: string;
-  description?: string;
-  status: boolean;
-}
 
 function Home({navigation}: Props) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,18 +37,6 @@ function Home({navigation}: Props) {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [taskBeingDeleted, setTaskBeingDeleted] = useState<Task | null>(null);
   const isFocused = useIsFocused();
-
-  function handleToggleCheck(id: string) {
-    const indexTask = tasks.findIndex(task => task.id === id);
-
-    const updatedTask = tasks;
-
-    updatedTask[indexTask].status = !updatedTask[indexTask].status;
-
-    setTasks([...updatedTask]);
-
-    TasksService.update(updatedTask);
-  }
 
   const tasksFiltered = tasks.filter(task =>
     task.title.toUpperCase().includes(searchTerm.toUpperCase()),
@@ -111,6 +94,10 @@ function Home({navigation}: Props) {
       const taskStorage = await TasksService.delete(taskBeingDeleted.id, tasks);
       setTasks(taskStorage);
       setIsDeleteModalVisible(false);
+      Toast.show({
+        type: 'success',
+        text1: 'Excluído com sucesso!',
+      });
     }
   }
 
@@ -126,6 +113,14 @@ function Home({navigation}: Props) {
       setTasks(tasksStorage);
     }
   }, [isFocused]);
+
+  async function handleToggleCheck(task: Task) {
+    task.status = !task.status;
+
+    const tasksUpdated = TasksService.updateTasks(task, tasks);
+
+    setTasks(tasksUpdated);
+  }
 
   useEffect(() => {
     getTasks();
@@ -155,7 +150,7 @@ function Home({navigation}: Props) {
             <Card key={task.id} checkBox={task.status}>
               <InfoContainer>
                 <CheckBox
-                  onChange={() => handleToggleCheck(task.id)}
+                  onChange={() => handleToggleCheck(task)}
                   value={task.status}
                 />
 
@@ -167,8 +162,8 @@ function Home({navigation}: Props) {
                 </InfoCard>
               </InfoContainer>
 
-              {!task.status && (
-                <OptionsCard>
+              <OptionsCard>
+                {!task.status && (
                   <Icon
                     onPress={() => handleToScreenEditTask(task.id)}
                     style={{marginRight: 5}}
@@ -176,14 +171,14 @@ function Home({navigation}: Props) {
                     name="edit"
                     color="#5061fc"
                   />
-                  <Icon
-                    onPress={() => handleDeleteTask(task)}
-                    size={28}
-                    name="trash"
-                    color="red"
-                  />
-                </OptionsCard>
-              )}
+                )}
+                <Icon
+                  onPress={() => handleDeleteTask(task)}
+                  size={28}
+                  name="trash"
+                  color="red"
+                />
+              </OptionsCard>
             </Card>
           ))}
         </Container>
