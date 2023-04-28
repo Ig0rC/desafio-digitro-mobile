@@ -8,6 +8,7 @@ import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import ContainerMain from '../../components/ContainerMain';
 import Loader from '../../components/Loader';
 import delay from '../../utils/delay';
+import {Keyboard} from 'react-native';
 
 type Props = NativeStackScreenProps<AppStack, 'EditTask'>;
 
@@ -19,6 +20,7 @@ function EditTask({route}: Props) {
   async function handleSubmit(title: string, description: string | undefined) {
     try {
       setIsLoading(true);
+      Keyboard.dismiss();
       if (task) {
         await TasksService.updateOne({
           ...task,

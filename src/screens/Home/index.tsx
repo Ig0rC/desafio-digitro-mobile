@@ -128,7 +128,7 @@ function Home({navigation}: Props) {
 
   return (
     <ContainerMain>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <Container>
           <InputSearch
             value={searchTerm}
