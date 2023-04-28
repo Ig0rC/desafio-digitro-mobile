@@ -85,6 +85,7 @@ export const InfoContainer = styled.View`
 
 export const InfoCard = styled.View`
   flex-shrink: 1;
+  margin: 6px;
 `;
 
 export const Title = styled.Text<TitleProps>`
